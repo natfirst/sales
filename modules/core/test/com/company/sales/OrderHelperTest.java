@@ -42,6 +42,7 @@ public class OrderHelperTest {
     @Test
     public void testCalculateAmount() {
         BigDecimal amount = orderHelper.calculateAmount(order, order.getLines());
+        order.setAmount(amount);
         assertEquals(BigDecimal.valueOf(20), amount);
     }
 
