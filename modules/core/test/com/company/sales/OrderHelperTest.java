@@ -13,8 +13,7 @@ import java.util.Collections;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+
 
 public class OrderHelperTest {
 
@@ -46,12 +45,6 @@ public class OrderHelperTest {
         assertEquals(BigDecimal.valueOf(20), amount);
     }
 
-    @Test
-    public void testOrderDate() {
-        order.setDate(new Date());
-        Date orderDate = order.getDate();
-        assertNotNull(orderDate);
 
-    }
 
 }
