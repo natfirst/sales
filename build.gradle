@@ -44,7 +44,7 @@ dependencies {
 
 }
 
-def hsql = 'org.hsqldb:hsqldb:2.2.9'
+def postgres = 'org.postgresql:postgresql:9.4.1212'
 
 configure([globalModule, coreModule, guiModule, webModule]) {
     apply(plugin: 'java')
@@ -66,11 +66,25 @@ configure([globalModule, coreModule, guiModule, webModule]) {
         archives sourceJar
     }
 
-    jacocoTestReport {
+    task codeCoverageReport(type: JacocoReport, dependsOn: test) {
+        executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+
+        classDirectories = fileTree(dir: "${project.rootDir}/modules/**/build/classes/").exclude('**/entity/**') +
+                fileTree(dir: "${project.rootDir}/modules/**/build/enhanced-classes/")
+
+
+//                + fileTree(dir: "${project.rootDir}/modules/core/build/classes/")
+
+
+        def coverageSourceDirs = [
+                "/src/"
+        ]
+
+        sourceDirectories = files(coverageSourceDirs)
+
         reports {
             html.enabled true
-            xml.enabled true
-            csv.enabled false
         }
     }
 }
@@ -91,8 +105,8 @@ configure(coreModule) {
     dependencies {
         compile(globalModule)
         provided(servletApi)
-        jdbc(hsql)
-        testRuntime(hsql)
+        jdbc(postgres)
+        testRuntime(postgres)
 
     }
 
@@ -113,19 +127,19 @@ configure(coreModule) {
     }
 
     task createDb(dependsOn: assembleDbScripts, description: 'Creates local database', type: CubaDbCreation) {
-        dbms = 'hsql'
+        dbms = 'postgres'
         host = 'localhost'
         dbName = 'sales'
-        dbUser = 'sa'
-        dbPassword = ''
+        dbUser = 'cuba'
+        dbPassword = 'cuba'
     }
 
     task updateDb(dependsOn: assembleDbScripts, description: 'Updates local database', type: CubaDbUpdate) {
-        dbms = 'hsql'
+        dbms = 'postgres'
         host = 'localhost'
         dbName = 'sales'
-        dbUser = 'sa'
-        dbPassword = ''
+        dbUser = 'cuba'
+        dbPassword = 'cuba'
     }
 
     task startTestDb(type: CubaHsqlStart) {
@@ -231,3 +245,12 @@ task wrapper(type: Wrapper) {
 
 
 apply from: 'extra.gradle'
+
+task buildWar(type: CubaWarBuilding) {
+    coreContextXmlPath = 'modules/core/web/META-INF/war-context.xml'
+    webXmlPath = 'modules/web/web/WEB-INF/single-war-web.xml'
+    appProperties = ['cuba.automaticDatabaseUpdate' : true]
+    includeContextXml = true
+    includeJdbcDriver = true
+    appHome = 'app_home'
+}
