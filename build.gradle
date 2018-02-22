@@ -1,4 +1,4 @@
-buildscript {
+ buildscript {
     ext.cubaVersion = '6.8.1'
     repositories {
 
@@ -142,17 +142,18 @@ configure(coreModule) {
         dbPassword = 'cuba'
     }
 
-    task startTestDb(type: CubaHsqlStart) {
+    /*task startTestDb(type: CubaHsqlStart) {
         dbPort = 9002 // should be different from the default port 9001 used by Studio HSQLDB server
         dbName = 'sales_test'
     }
+    */
 
     task createTestDb(dependsOn: assemble, description: 'Creates local Postgres database for tests', type: CubaDbCreation) {
-        dbms = 'hsql'
-        host = 'localhost:9002'
+        dbms = 'postgres'
+        host = 'localhost'
         dbName = 'sales_test'
-        dbUser = 'sa'
-        dbPassword = ''
+        dbUser = 'cuba'
+        dbPassword = 'cuba'
     }
 }
 
