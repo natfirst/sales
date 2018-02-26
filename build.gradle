@@ -253,5 +253,5 @@ task buildWar(type: CubaWarBuilding) {
     appProperties = ['cuba.automaticDatabaseUpdate' : true]
     includeContextXml = true
     includeJdbcDriver = true
-    appHome = 'app_home'
+    appHome = './app_home'
 }
