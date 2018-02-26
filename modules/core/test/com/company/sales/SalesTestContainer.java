@@ -34,10 +34,10 @@ public class SalesTestContainer extends TestContainer {
     }
 
     private void initDbProperties() {
-        dbDriver = "org.hsqldb.jdbc.JDBCDriver";
-        dbUrl = "jdbc:hsqldb:hsql://localhost:9002/sales_test";
-        dbUser = "sa";
-        dbPassword = "";
+        dbDriver = "org.postgresql.Driver";
+        dbUrl = "jdbc:postgresql://localhost/sales_test";
+        dbUser = "cuba";
+        dbPassword = "cuba";
     }
 
     public static class Common extends SalesTestContainer {
