@@ -5,10 +5,10 @@
               maxTotal="20"
               maxWaitMillis="5000"
               name="jdbc/CubaDS"
-              password="e691955fd65efe4b57e5e26cdabe9819dbc51ecfdd0c36d62c15e2dcb37c9564"
+              password="cuba"
               type="javax.sql.DataSource"
-              url="jdbc:postgresql://ec2-184-73-202-79.compute-1.amazonaws.com/dsfbv4ug9c3os"
-              username="ykxahbfbgsfxhk"/>
+              url="jdbc:postgresql://localhost/sales"
+              username="cuba"/>
     <!-- Switch off session serialization -->
     <Manager pathname=""/>
 </Context>
