@@ -3,7 +3,6 @@ package com.company.sales;
 import com.company.sales.entity.Order;
 import com.company.sales.entity.OrderLine;
 import com.company.sales.entity.Product;
-import com.company.sales.service.OrderHelperService;
 import com.company.sales.service.OrderHelperServiceBean;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,14 +14,14 @@ import java.util.Date;
 import static org.junit.Assert.assertEquals;
 
 
-public class OrderHelperTest {
+public class OrderServiceTest {
 
-    private OrderHelperServiceBean orderHelper;
+    private OrderHelperServiceBean orderService;
     private Order order;
 
     @Before
     public void setUp() throws Exception {
-        orderHelper = new OrderHelperServiceBean();
+        orderService = new OrderHelperServiceBean();
 
         order = new Order();
         order.setDate(new Date());
@@ -41,7 +40,7 @@ public class OrderHelperTest {
 
     @Test
     public void testCalculateAmount() {
-        BigDecimal amount = orderHelper.calculateAmount(order, order.getLines());
+        BigDecimal amount = orderService.calculateAmount(order, order.getLines());
         order.setAmount(amount);
         assertEquals(BigDecimal.valueOf(20), amount);
     }
